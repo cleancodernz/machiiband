@@ -37,9 +37,34 @@
     ></iframe>
   </div>
   <div class="line"></div>
+  <script>
+      document.getElementById('playSong').addEventListener('click', function() {
+          const songName = document.getElementById('songName').value;
+
+          fetch(`https://<your-azure-function-url>?song_name=${encodeURIComponent(songName)}`)
+              .then(response => response.text())
+              .then(data => {
+                  if (data.startsWith('Preview URL: ')) {
+                      const previewUrl = data.split('Preview URL: ')[1];
+                      const audioPlayer = document.getElementById('audioPlayer');
+                      audioPlayer.src = previewUrl;
+                      audioPlayer.play();
+                  } else {
+                      alert(data);  // Show any errors (e.g., song not found)
+                  }
+              })
+              .catch(error => {
+                  console.error('Error fetching the song preview:', error);
+              });
+      });
+  </script>
+
   <div class="setlist_container">    
     <div class="setlist_box">    
       <h2 align="center">Setlist</h2>  
+      <input type="text" id="songName" placeholder="Enter song name">
+      <button id="playSong">Play Song Preview</button>
+      <audio id="audioPlayer" controls></audio>
       <ul class="setlist">        
         <p>April Sun In Cuba</p>
         <p>Are You Gonna Be My Girl</p>
