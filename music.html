@@ -41,7 +41,7 @@
       document.getElementById('playSong').addEventListener('click', function() {
           const songName = document.getElementById('songName').value;
 
-          fetch(`https://<your-azure-function-url>?song_name=${encodeURIComponent(songName)}`)
+          fetch(`/api/spotifyfunction?song_name=${encodeURIComponent(songName)}`)
               .then(response => response.text())
               .then(data => {
                   if (data.startsWith('Preview URL: ')) {
