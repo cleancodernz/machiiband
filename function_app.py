@@ -15,6 +15,7 @@ def spotifyintegration(req: func.HttpRequest) -> func.HttpResponse:
 
     # Get the song name from the request
     song_name = req.params.get('song_name')
+    logging.info('song_name:...' )
     if not song_name:
         try:
             req_body = req.get_json()
@@ -30,10 +31,10 @@ def spotifyintegration(req: func.HttpRequest) -> func.HttpResponse:
         )
     
     # Get Spotify token
-    token = spotifyintegration.get_spotify_token()
+    token = get_spotify_token()
     
     # Search for the song
-    track = spotifyintegration.search_spotify_song(song_name, token)
+    track = search_spotify_song(song_name, token)
     
     if track:
         preview_url = track.get('preview_url', None)
@@ -48,9 +49,13 @@ def spotifyintegration(req: func.HttpRequest) -> func.HttpResponse:
 # Get a spotify token
 #####################
 def get_spotify_token():
+    logging.info('Getting tokens...')
+     
     client_id = os.getenv("SPOTIFY_CLIENT_ID")
     client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
     
+    logging.info('Connecting...')
+
     auth_url = "https://accounts.spotify.com/api/token"
     headers = {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -62,6 +67,26 @@ def get_spotify_token():
     }
     
     response = requests.post(auth_url, headers=headers, data=data)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        logging.info(f"Request succeeded with status code {response.status_code}")
+        # Parse the JSON response
+        response_data = response.json()
+
+        # Check if the response is a dictionary or list
+        if isinstance(response_data, dict):
+            # Iterate over dictionary items (key-value pairs)
+            for key, value in response_data.items():
+                logging.info(f"{key}: {value}")
+        elif isinstance(response_data, list):
+            # Iterate over list items
+            for item in response_data:
+                logging.info(item)
+    else:
+        logging.info(f"Request failed with status code {response.status_code}")
+        logging.info(f"Request failed with reason {response.reason}")
+
     token_info = response.json()
     
     return token_info['access_token']
