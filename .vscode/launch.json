@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "msedge",  // Use Chrome for debugging
+        "request": "launch",
+        "name": "Launch Static Web App",
+        "url": "http://localhost:3000",  // The URL where your app is running locally
+        "webRoot": "${workspaceFolder}/",  // The root of your project workspace
+        "preLaunchTask": "npm: start",  // Automatically runs 'npm start' before launch
+        "postDebugTask": "terminateProcess",  // Stops the server when debugging ends
+        "sourceMaps": true,  // Enable source maps for debugging (React/Vue/Angular)
+        "skipFiles": ["<node_internals>/**"],  // Skip Node.js internal files for debugging
+        "runtimeArgs": ["--remote-debugging-port=9222"],  // Set up remote debugging
+        "port": 9222  // Remote debugging port
+      }
+    ]
+  }
+  
