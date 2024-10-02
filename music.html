@@ -41,7 +41,7 @@
       document.getElementById('playSong').addEventListener('click', function() {
           const songName = document.getElementById('songName').value;
 
-          fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?song_name=${encodeURIComponent(songName)}`)
+          fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`)
               .then(response => response.text())
               .then(data => {
                   if (data.startsWith('Preview URL: ')) {
