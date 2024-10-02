@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mach II</title>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          padding: 20px;
+      }
+      .song {
+          cursor: pointer;
+          color: blue;
+          margin-bottom: 10px;
+      }
+      .song:hover {
+          text-decoration: underline;
+      }
+    </style>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <nav>
@@ -64,8 +78,58 @@
       });
   </script>
 
+  <script>
+    // Function to search for a track by name and artist using Spotify API
+    async function searchTrack(songName, artistName) {
+            const query = encodeURIComponent(`${songName} artist:${artistName}`);
+            const response = await fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            if (data.tracks.items.length > 0) {
+                return data.tracks.items[0].preview_url;  // Get the preview URL
+            }
+            return null;  // No preview found
+        }
+
+        // Function to play the preview
+        async function playPreview(songName, artistName) {
+            const previewUrl = await searchTrack(songName, artistName);
+            const audioPlayer = document.getElementById('audio-player');
+
+            if (previewUrl) {
+                audioPlayer.src = previewUrl;
+                audioPlayer.play();
+            } else {
+                alert('No preview available for this track.');
+            }
+        }
+
+        // Add click event listeners to all songs
+        document.querySelectorAll('.song').forEach(songElement => {
+            songElement.addEventListener('click', async (e) => {
+                const songName = songElement.getAttribute('data-name');
+                const artistName = songElement.getAttribute('data-artist');              
+
+                //if (!token) {
+                //    await getSpotifyToken();  // Get the token if not already obtained
+                //}
+
+                playPreview(songName, artistName);
+            });
+        });    
+  </script>
+
   <div class="setlist_container">    
     <div class="setlist_box">    
+      <div id="song-list"></div>
+        <div class="song" data-name="Blinding Lights" data-artist="The Weeknd">Blinding Lights - The Weeknd</div>
+        <div class="song" data-name="Shape of You" data-artist="Ed Sheeran">Shape of You - Ed Sheeran</div>
+        <div class="song" data-name="Levitating" data-artist="Dua Lipa">Levitating - Dua Lipa</div>
+        <!-- Add more songs as needed -->
+      </div>
       <h2 align="center">Setlist</h2>        
       <ul class="setlist">        
         <p>April Sun In Cuba</p>
