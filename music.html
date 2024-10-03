@@ -51,7 +51,9 @@
     ></iframe>
   </div>
   <div class="line"></div>  
-  <audio id="audioPlayer" controls></audio>
+  <center>
+    <audio id="audioPlayer" controls></audio>
+  </center>
   <div class="setlist_box">          
     <h2 align="center">Setlist</h2>            
     <ul id="song-list" class="setlist">
@@ -108,7 +110,7 @@
                 songElement.classList.add('song');
                 songElement.setAttribute('data-name', song);
                 songElement.addEventListener('click', () => {
-                    alert(`Playing preview of ${song} by ${artist}`);
+                    //alert(`Playing preview of ${song} by ${artist}`);
                     playPreview(song, "artist");
                 });
                 
@@ -122,7 +124,7 @@
       // directly play a song
       document.getElementById('playSong').addEventListener('click', function() {
           const songName = document.getElementById('songName').value;
-          alert('searching for ' + songName);
+          //alert('searching for ' + songName);
           fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`)
               .then(response => response.text())
               .then(data => {
