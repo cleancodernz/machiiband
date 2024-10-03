@@ -109,6 +109,7 @@
                 songElement.setAttribute('data-name', song);
                 songElement.addEventListener('click', () => {
                     alert(`Playing preview of ${song} by ${artist}`);
+                    playPreview(song, "artist");
                 });
                 
                 songListElement.appendChild(songElement);
