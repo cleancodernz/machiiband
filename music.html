@@ -76,9 +76,7 @@
                   console.error('Error fetching the song preview:', error);
               });
       });
-  </script>
 
-  <script>
     // Function to search for a track by name and artist using Spotify API
     async function searchTrack(songName, artistName) {
             const query = encodeURIComponent(`${songName} artist:${artistName}`);
@@ -116,8 +114,9 @@
             }
         }
 
-        // Add click event listeners to all songs
+        // Add click event listeners to all songs        
         document.querySelectorAll('.song').forEach(songElement => {
+            alert('setting up songs');
             songElement.addEventListener('click', async (e) => {
                 const songName = songElement.getAttribute('data-name');
                 const artistName = songElement.getAttribute('data-artist');              
