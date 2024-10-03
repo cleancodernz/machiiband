@@ -63,7 +63,7 @@
   <script>
       document.getElementById('playSong').addEventListener('click', function() {
           const songName = document.getElementById('songName').value;
-
+          alert('searching for ' + songName);
           fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`)
               .then(response => response.text())
               .then(data => {
@@ -83,16 +83,14 @@
 
     // Function to search for a track by name and artist using Spotify API
     async function searchTrack(songName, artistName) {
-            const query = encodeURIComponent(`${songName} artist:${artistName}`);
-            
-            alert('searching for ' + songName);
 
+            alert('searching for ' + songName);
             fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`)
               .then(response => response.text())
               .then(data => {
                   if (data.startsWith('Preview URL: ')) {
-                      const previewUrl = data.split('Preview URL: ')[1];
-                      const audioPlayer = document.getElementById('audioPlayer');
+                      const previewUrl = data.split('Preview URL: ')[1];                      
+                      alert(previewUrl);
                       return previewUrl;                      
                   } else {
                       alert(data);  // Show any errors (e.g., song not found)
@@ -108,7 +106,7 @@
         async function playPreview(songName, artistName) {
 
             const previewUrl = await searchTrack(songName, artistName);
-            const audioPlayer = document.getElementById('audio-player');
+            const audioPlayer = document.getElementById('audioPlayer');
 
             if (previewUrl) {
                 audioPlayer.src = previewUrl;
