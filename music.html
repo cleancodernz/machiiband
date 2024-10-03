@@ -50,20 +50,73 @@
       allowfullscreen
     ></iframe>
   </div>
-  <div class="line"></div>
-  <input type="text" id="songName" placeholder="Enter song name">
-  <button id="playSong">Play Song Preview</button>
+  <div class="line"></div>  
   <audio id="audioPlayer" controls></audio>
-  <div id="song-list">
-    <div class="song" data-name="April Sun in Cuba" data-artist="Dragon">April Sun in Cuba - Dragon</div>
-    <div class="song" data-name="Shape of You" data-artist="Ed Sheeran">Shape of You - Ed Sheeran</div>
-    <div class="song" data-name="Levitating" data-artist="Dua Lipa">Levitating - Dua Lipa</div>
-    <!-- Add more songs as needed -->
+  <div class="setlist_box">          
+    <h2 align="center">Setlist</h2>            
+    <ul id="song-list" class="setlist">
+      
+    </ul>
   </div>
   <script>
+          
+        // Function to load CSV data from the server
+        async function loadSongs() {
+            try {
+                // Fetch the CSV file from the server
+                const response = await fetch('/data/songs.csv');
+                const csvData = await response.text();
+
+                // Process the CSV data and extract songs
+                const songs = parseCSV(csvData);
+
+                // Display the songs in HTML
+                displaySongs(songs);
+            } catch (error) {
+                console.error('Error loading the song list:', error);
+            }
+        }
+
+        // Function to parse CSV data
+        function parseCSV(data) {
+            const lines = data.split('\n');
+            const songs = [];
+
+            // Skip the first line (header) and process each subsequent line
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line) {
+                    const [song, artist] = line.split(',');
+                    songs.push({ song: song.trim(), artist: artist.trim() });
+                }
+            }
+
+            return songs;
+        }
+
+        // Function to display songs in HTML
+        function displaySongs(songs) {
+            const songListElement = document.getElementById('song-list');            
+            //songListElement.innerHTML = '';  // Clear any existing content            
+
+            songs.forEach(({ song, artist }) => {                
+                const songElement = document.createElement('p');                                                                
+                songElement.textContent = `${song} - ${artist}`;
+                songElement.addEventListener('click', () => {
+                    //alert(`Playing preview of ${song} by ${artist}`);
+                });
+                
+                songListElement.appendChild(songElement);
+            });
+        }
+
+        // Load the songs when the page loads
+        window.onload = loadSongs; 
+
+      // directly play a song
       document.getElementById('playSong').addEventListener('click', function() {
           const songName = document.getElementById('songName').value;
-          alert('searching for ' + songName);
+          //alert('searching for ' + songName);
           fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`)
               .then(response => response.text())
               .then(data => {
@@ -84,7 +137,7 @@
     // Function to search for a track by name and artist using Spotify API
     async function searchTrack(songName, artistName) {
 
-            alert('searching for ' + songName);
+            //alert('searching for ' + songName);
             fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`)
               .then(response => response.text())
               .then(data => {
@@ -123,58 +176,6 @@
         });    
   </script>
 
-  <div class="setlist_container">    
-    <div class="setlist_box">          
-      <h2 align="center">Setlist</h2>        
-      <ul class="setlist">        
-        <p>April Sun In Cuba</p>
-        <p>Are You Gonna Be My Girl</p>
-        <p>Are You Gonna Go My Way</p>
-        <p>Life in the Fast Lane</p>
-        <p>"Heroes"</p>
-        <p>Sweet Home Alabama</p>
-        <p>Hash Pipe</p>
-        <p>Addicted to Love</p>
-        <p>Are You Old Enough?</p>
-        <p>Wildflower</p>
-        <p>Creep</p>
-        <p>Crazy Little Thing</p>
-        <p>White Wedding</p>
-        <p>Hard To Handle</p>
-        <p>White Room</p>
-        <p>Run to You</p>
-        <p>Rain</p>
-        <p>Santeria</p>
-        <p>Lonely Boy</p>
-        <p>Song 2</p>
-        <p>Interstate Love Song</p>
-        <p>Gimme all your lovin’</p>
-        <p>Blue Lady</p>
-        <p>Brown Sugar</p>
-        <p>Just What I Needed</p>
-        <p>Firewoman</p>
-        <p>Come as You Are</p>
-        <p>Santa Monica</p>
-        <p>Molly’s Chambers</p>
-        <p>Pride</p>
-        <p>Whaling</p>
-        <p>Honky Tonk Woman</p>
-        <p>Tush</p>
-        <p>Be Mine Tonight</p>
-        <p>Under the Bridge</p>
-        <p>Why Does Love Do This To Me?</p>
-        <p>Dancing in the Dark</p>
-        <p>Rebel Yell</p>
-        <p>Dead or Alive</p>
-        <p>Everlong</p>
-        <p>Last Dance for Mary Jane</p>
-        <p>Sweet Child o' Mine</p>
-        <p>Long way to the Top</p>
-        <p>Say it Ain't So</p>
-        <p>... and many more!</p>
-      </ul>
-    </div>
-  </div>
   <div class="line"></div>
   <!-- Footer -->
   <div class="footer">
