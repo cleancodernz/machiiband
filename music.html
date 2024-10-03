@@ -55,6 +55,7 @@
   <div class="setlist_box">          
     <h2 align="center">Setlist</h2>            
     <ul id="song-list" class="setlist">
+
       
     </ul>
   </div>
@@ -99,11 +100,15 @@
             const songListElement = document.getElementById('song-list');            
             //songListElement.innerHTML = '';  // Clear any existing content            
 
+            //<div class="song" data-name="Blinding Lights" data-artist="The Weeknd">Blinding Lights - The Weeknd</div>
+
             songs.forEach(({ song, artist }) => {                
                 const songElement = document.createElement('p');                                                                
                 songElement.textContent = `${song} - ${artist}`;
+                songElement.classList.add('song');
+                songElement.setAttribute('data-name', song);
                 songElement.addEventListener('click', () => {
-                    //alert(`Playing preview of ${song} by ${artist}`);
+                    alert(`Playing preview of ${song} by ${artist}`);
                 });
                 
                 songListElement.appendChild(songElement);
