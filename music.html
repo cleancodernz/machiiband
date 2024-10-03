@@ -54,6 +54,12 @@
   <input type="text" id="songName" placeholder="Enter song name">
   <button id="playSong">Play Song Preview</button>
   <audio id="audioPlayer" controls></audio>
+  <div id="song-list">
+    <div class="song" data-name="Blinding Lights" data-artist="The Weeknd">Blinding Lights - The Weeknd</div>
+    <div class="song" data-name="Shape of You" data-artist="Ed Sheeran">Shape of You - Ed Sheeran</div>
+    <div class="song" data-name="Levitating" data-artist="Dua Lipa">Levitating - Dua Lipa</div>
+    <!-- Add more songs as needed -->
+  </div>
   <script>
       document.getElementById('playSong').addEventListener('click', function() {
           const songName = document.getElementById('songName').value;
@@ -115,7 +121,7 @@
         }
 
         // Add click event listeners to all songs        
-        alert('setting up songs...');
+        alert('setting up songs...' +  document.querySelectorAll('.song').length);
         document.querySelectorAll('.song').forEach(songElement => {
             alert('setting up songs');
             songElement.addEventListener('click', async (e) => {
@@ -130,13 +136,6 @@
             });
         });    
   </script>
-
-  <div id="song-list">
-    <div class="song" data-name="Blinding Lights" data-artist="The Weeknd">Blinding Lights - The Weeknd</div>
-    <div class="song" data-name="Shape of You" data-artist="Ed Sheeran">Shape of You - Ed Sheeran</div>
-    <div class="song" data-name="Levitating" data-artist="Dua Lipa">Levitating - Dua Lipa</div>
-    <!-- Add more songs as needed -->
-  </div>
 
   <div class="setlist_container">    
     <div class="setlist_box">          
