@@ -121,7 +121,7 @@
       // directly play a song
       document.getElementById('playSong').addEventListener('click', function() {
           const songName = document.getElementById('songName').value;
-          //alert('searching for ' + songName);
+          alert('searching for ' + songName);
           fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`)
               .then(response => response.text())
               .then(data => {
@@ -142,13 +142,14 @@
     // Function to search for a track by name and artist using Spotify API
     async function searchTrack(songName, artistName) {
 
-            //alert('searching for ' + songName);
+            alert('searching for ' + songName);
             fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`)
               .then(response => response.text())
               .then(data => {
                   if (data.startsWith('Preview URL: ')) {
                     const previewUrl = data.split('Preview URL: ')[1];
                       const audioPlayer = document.getElementById('audioPlayer');
+                      alert('playing ' + songName);
                       audioPlayer.src = previewUrl;
                       audioPlayer.play();   
                   } else {
