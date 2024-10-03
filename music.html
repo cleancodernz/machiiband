@@ -89,9 +89,10 @@
               .then(response => response.text())
               .then(data => {
                   if (data.startsWith('Preview URL: ')) {
-                      const previewUrl = data.split('Preview URL: ')[1];                      
-                      alert(previewUrl);
-                      return previewUrl;                      
+                    const previewUrl = data.split('Preview URL: ')[1];
+                      const audioPlayer = document.getElementById('audioPlayer');
+                      audioPlayer.src = previewUrl;
+                      audioPlayer.play();   
                   } else {
                       alert(data);  // Show any errors (e.g., song not found)
                   }
@@ -104,16 +105,7 @@
 
         // Function to play the preview
         async function playPreview(songName, artistName) {
-
-            const previewUrl = await searchTrack(songName, artistName);
-            const audioPlayer = document.getElementById('audioPlayer');
-
-            if (previewUrl) {
-                audioPlayer.src = previewUrl;
-                audioPlayer.play();
-            } else {
-                alert('No preview available for this track.');
-            }
+            searchTrack(songName, artistName);
         }
 
         // Add click event listeners to all songs        
