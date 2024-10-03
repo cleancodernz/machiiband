@@ -82,20 +82,29 @@
     // Function to search for a track by name and artist using Spotify API
     async function searchTrack(songName, artistName) {
             const query = encodeURIComponent(`${songName} artist:${artistName}`);
-            const response = await fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            const data = await response.json();
-            if (data.tracks.items.length > 0) {
-                return data.tracks.items[0].preview_url;  // Get the preview URL
-            }
+            
+            fetch(`https://spotifyintegrationmach2.azurewebsites.net/api/spotifyintegration?code=DyVZ8ue18beuku5Loss3S-CSEjrzhvAM4O-LSHTZV7o2AzFuA5aXAQ%3D%3D&song_name=${encodeURIComponent(songName)}`)
+              .then(response => response.text())
+              .then(data => {
+                  if (data.startsWith('Preview URL: ')) {
+                      const previewUrl = data.split('Preview URL: ')[1];
+                      const audioPlayer = document.getElementById('audioPlayer');
+                      return previewUrl;                      
+                  } else {
+                      alert(data);  // Show any errors (e.g., song not found)
+                  }
+              })
+              .catch(error => {
+                  console.error('Error fetching the song preview:', error);
+              });
             return null;  // No preview found
         }
 
         // Function to play the preview
         async function playPreview(songName, artistName) {
+
+            alert('playing :' + songName);
+
             const previewUrl = await searchTrack(songName, artistName);
             const audioPlayer = document.getElementById('audio-player');
 
