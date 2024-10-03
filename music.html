@@ -107,8 +107,6 @@
         // Function to play the preview
         async function playPreview(songName, artistName) {
 
-            alert('playing :' + songName);
-
             const previewUrl = await searchTrack(songName, artistName);
             const audioPlayer = document.getElementById('audio-player');
 
@@ -121,9 +119,7 @@
         }
 
         // Add click event listeners to all songs        
-        alert('setting up songs...' +  document.querySelectorAll('.song').length);
-        document.querySelectorAll('.song').forEach(songElement => {
-            alert('setting up songs');
+        document.querySelectorAll('.song').forEach(songElement => {            
             songElement.addEventListener('click', async (e) => {
                 const songName = songElement.getAttribute('data-name');
                 const artistName = songElement.getAttribute('data-artist');              
