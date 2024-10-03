@@ -33,9 +33,9 @@ jobs:
           api_location: "/api" # Api source code path - optional
           output_location: "." # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-          production_branch: "main"          
-          #deployment_environment: "staging"
-          deployment_environment: "main"
+          production_branch: "main"
+          # Specifies the environment to deploy to. Leave blank for the production environment. This input takes precedence over the production branch.
+          deployment_environment: "staging"          
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
